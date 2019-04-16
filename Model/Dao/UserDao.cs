@@ -24,16 +24,37 @@ namespace Model.Dao
         {
             return db.User.SingleOrDefault(x => x.UserName == userName);
         }
-        public bool Login(string userName, string passWord)
+        public int Login(string userName, string passWord)
         {
-            var result = db.User.Count(x => x.UserName == userName && x.Password == passWord);
-            if (result > 0)
+            /*
+             * return 0 => "Tài khoản không tồn tại";
+             * return -1 => "Tài khoản đang bị khóa";
+             * return 1 => "Đăng nhập thành công";
+             * return 2 => "Sai mật khẩu";
+             */
+            var result = db.User.SingleOrDefault(x => x.UserName == userName);
+
+            if (result == null)
             {
-                return true;
+                return 0; 
             }
             else
             {
-                return false;
+                if (result.Status == false)
+                {
+                    return -1; 
+                }
+                else
+                {
+                    if (result.Password == passWord)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return 2;
+                    }
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Online_Shop.Languages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,6 +26,11 @@ namespace Online_Shop.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        public ActionResult ChangeLanguage(string lang)
+        {
+            new LanguageMang().SetLanguage(lang);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

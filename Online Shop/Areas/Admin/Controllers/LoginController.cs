@@ -22,18 +22,28 @@ namespace Online_Shop.Areas.Admin.Controllers
             {
                 var dao = new UserDao();
                 var result = dao.Login(model.UserName, Encryptor.MD5Hash(model.PassWord));
-                if (result)
+                if (result == 1)
                 {
+                    //lấy ra id của user
                     var user = dao.GetById(model.UserName);
                     var userSession = new UserLogin();
                     userSession.UserName = user.UserName;
                     userSession.UserID = user.ID;
-                    Session.Add(CommonConstants.USER_SESSION,userSession);
+                    //gán user vào session
+                    Session.Add(CommonConstants.USER_SESSION, userSession);
                     return RedirectToAction("Index", "Home");
                 }
-                else
+                else if (result == 0)
                 {
-                    ModelState.AddModelError("", "Đăng nhập không thành công.");
+                    ModelState.AddModelError("", "Tài khoản của bạn không tồn tại.");
+                }
+                else if (result == 2)
+                {
+                    ModelState.AddModelError("", "Bạn đã nhập sai mật khẩu.");
+                }
+                else if (result == -1)
+                {
+                    ModelState.AddModelError("", "Tài khoản của bạn đang bị khóa.");
                 }
             }
             return View("Index");

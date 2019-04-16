@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Online_Shop.Languages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,17 @@ namespace Online_Shop.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        //[HttpPost]
+        //public ActionResult Index(Registration r)
+        //{
+        //    return View(r);
+        //}
+        public ActionResult ChangeLanguage(string lang)
+        {
+            new LanguageMang().SetLanguage(lang);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

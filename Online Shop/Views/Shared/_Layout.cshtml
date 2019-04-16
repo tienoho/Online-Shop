@@ -25,6 +25,15 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
             </div>
+            <div style="padding:5px">
+
+                @{
+                    foreach (var i in Online_Shop.Languages.LanguageMang.AvailableLanguages)
+                    {
+                        @Html.ActionLink(i.LanguageFullName, "ChangeLanguage", "Home", new { lang = i.LanguageCultureName }, null) <text> </text>
+                    }
+                }
+            </div>
         </div>
     </div>
     <div class="container body-content">
