@@ -14,7 +14,7 @@ namespace Online_Shop.Areas.Admin.Controllers
     {
         // GET: Admin/User
         //Phân trang bằng PagedList
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
             var dao = new UserDao();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -62,7 +62,26 @@ namespace Online_Shop.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(User user)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var dao = new UserDao();
+                //nhập chuyển password sang mã hóa md5
+                if (!string.IsNullOrEmpty(user.Password))
+                {
+                    var encrytedMd5Pass = Encryptor.MD5Hash(user.Password);
+                    user.Password = encrytedMd5Pass;
+                }
+                var result = dao.Update(user);
+                if (result)
+                {
+                    return RedirectToAction("Index", "User");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Cập nhập user không thành công");
+                }
+            }
+            return View(user);
         }
     }
 }
