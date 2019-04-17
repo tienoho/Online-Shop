@@ -1,0 +1,92 @@
+﻿@model PagedList.IPagedList<Model.EF.User>
+@using PagedList.Mvc;
+
+@*@model List<Model.EF.User>*@
+@{
+    ViewBag.Title = "Quản lý người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header{Quản lý người dùng}
+
+<!-- DataTables Example -->
+<div class="card mb-3">
+    <div class="card-header">
+        @using (Html.BeginForm("Index", "User", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="col-md-4">
+                        <i class="fas fa-table"></i>
+                        Quản lý người dùng
+                    </div>
+                    <div class="col-md-8">
+                        <div class="col-md-6">
+                            <input type="text" name="searchString" />
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit">Tìm kiếm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tài khoản</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>Tài khoản</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th>#</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.ID">
+                                <td>@item.ID</td>
+                                <td>@item.UserName</td>
+                                <td>@item.Name</td>
+                                <td>@item.Email</td>
+                                <td>@item.Phone</td>
+                                <td>@item.Status</td>
+                                <td>
+                                    <a href="/Admin/User/Edit/@item.ID">Sửa</a> |
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID },
+                                   new AjaxOptions
+                                   {
+                                       Confirm = "Bạn có muốn xóa bản ghi này",
+                                       OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                       HttpMethod = "Delete"
+                                   })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @* Phân trang trong MVC
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
+                *@
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+            </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    </div>
+    <p class="small text-center text-muted my-5">
+        <em>More table examples coming soon...</em>
+    </p>

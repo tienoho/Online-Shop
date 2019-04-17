@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Online_Shop.Areas.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: Admin/Home
         public ActionResult Index()
@@ -20,10 +20,5 @@ namespace Online_Shop.Areas.Admin.Controllers
         //{
         //    return View(r);
         //}
-        public ActionResult ChangeLanguage(string lang)
-        {
-            new LanguageMang().SetLanguage(lang);
-            return RedirectToAction("Index", "Home");
-        }
     }
 }

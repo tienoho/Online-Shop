@@ -9,7 +9,7 @@ namespace Online_Shop.Models
 {
     public class HomeModel
     {
-        //[Display(Name = "LearnMore", ResourceType = typeof(Resource))]
+        [Display(Name = "LearnMore", ResourceType = typeof(Resource))]
         //[Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "FirstNameRequired")]
         public string LearnMore
         {
