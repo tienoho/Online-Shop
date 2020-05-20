@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Online_Shop.Areas.Admin.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseLoginController
     {
         // GET: Admin/Login
         public ActionResult Index()

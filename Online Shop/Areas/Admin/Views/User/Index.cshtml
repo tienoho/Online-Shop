@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="col-md-6">
-                            <input type="text" name="searchString" />
+                            <input type="text" name="searchString" value="@ViewBag.searchString"/>
                         </div>
                         <div class="col-md-6">
                             <button type="submit">Tìm kiếm</button>
@@ -44,17 +44,6 @@
                             <th>#</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>#</th>
-                            <th>Tài khoản</th>
-                            <th>Tên</th>
-                            <th>Email</th>
-                            <th>Số điện thoại</th>
-                            <th>Trạng thái</th>
-                            <th>#</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
                         @foreach (var item in Model)
                         {
@@ -82,7 +71,7 @@
                 @* Phân trang trong MVC
                     @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
                 *@
-                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page ,@searchString = @ViewBag.searchString}))
             </div>
         </div>
         <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

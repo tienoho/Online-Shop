@@ -10,11 +10,11 @@ using System.Web.Mvc;
 
 namespace Online_Shop.Areas.Admin.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         // GET: Admin/User
         //Phân trang bằng PagedList
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 2)
         {
             var dao = new UserDao();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -82,6 +82,11 @@ namespace Online_Shop.Areas.Admin.Controllers
                 }
             }
             return View(user);
+        }
+        public ActionResult Delete(long id)
+        {
+            new UserDao().Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }
